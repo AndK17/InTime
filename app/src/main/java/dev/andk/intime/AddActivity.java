@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -125,8 +123,6 @@ public class AddActivity extends Activity {
 
 
             new TaskDirectionRequest().execute(getRequestedUrl(from, to));
-//            values.put(DBHelper.KEY_ROUTE_TIME, 2700000);
-
 
             Switch s = findViewById(R.id.mondaySwitch);
             values.put(DBHelper.KEY_IS_MONDAY, s.isChecked()? 1 : 0);
@@ -154,7 +150,6 @@ public class AddActivity extends Activity {
         startActivity(intent);
     }
 
-    // отображаем диалоговое окно для выбора времени
     public void setTime(View v) {
         new TimePickerDialog(AddActivity.this, t,
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
@@ -162,15 +157,12 @@ public class AddActivity extends Activity {
                 .show();
     }
 
-    // установка начальных даты и времени
     private void setInitialDateTime() {
-
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         String time = String.valueOf(formatter.format(dateAndTime.getTimeInMillis()));
         currentDateTime.setText(time);
     }
 
-    // установка обработчика выбора времени
     TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -271,7 +263,6 @@ public class AddActivity extends Activity {
                 database = dbHelper.getWritableDatabase();
                 values.put(DBHelper.KEY_ROUTE_TIME, (int) ((JSONObject) ((JSONObject) (((JSONObject) jTime.get(0))
                         .getJSONArray("legs").get(0))).get("duration")).get("value")*1000);
-                Log.d("InTimeLog", values.toString());
                 database.insert(DBHelper.TABLE_NAME, null, values);
                 Intent intent = new Intent(AddActivity.this, MainActivity.class);
                 intent.putExtra("createAlarm", "true");

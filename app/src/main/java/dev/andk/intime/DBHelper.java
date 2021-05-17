@@ -3,7 +3,6 @@ package dev.andk.intime;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.security.keystore.KeyNotYetValidException;
 
 import androidx.annotation.Nullable;
 
@@ -60,20 +59,4 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             onCreate(db);
     }
-
 }
-
-
-//id
-//        координаты начала
-//        название координат начала
-//        координаты конца
-//        название координат конца
-//        время
-//        в понедельник
-//        в овторник
-//        в среду
-//        в четверг
-//        в пятницу
-//        в субботу
-//        в воскресенье

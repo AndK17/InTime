@@ -51,9 +51,6 @@ public class СheckingReceiver extends BroadcastReceiver {
         getBundle = intent.getBundleExtra("bundle");
         int i = (int)getBundle.getSerializable("timeReserve");
 
-        NotificationCompat.Builder builder;
-        NotificationManagerCompat notificationManager;
-
         Log.d("InTimeLog", "CheckingReceiver i = " + i);
         get_cursor();
         LatLng from = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LNG)));
@@ -180,9 +177,6 @@ public class СheckingReceiver extends BroadcastReceiver {
                 int time = (int) ((JSONObject) ((JSONObject) (((JSONObject) jTime.get(0))
                         .getJSONArray("legs").get(0))).get("duration")).get("value")*1000;
                 int startTime = cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_TIME_TO)) - time - 900000;
-
-                Log.d("InTimeLog", String.valueOf(time));
-                Log.d("InTimeLog", String.valueOf(startTime+900000));
 
                 SimpleDateFormat hourFormatter = new SimpleDateFormat("HH");
                 SimpleDateFormat minuteFormatter = new SimpleDateFormat("mm");

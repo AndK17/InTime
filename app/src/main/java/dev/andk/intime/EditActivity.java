@@ -95,8 +95,6 @@ public class EditActivity extends Activity {
         toText.setText(cursor.getString(cursor.getColumnIndex(DBHelper.KEY_FINISH_NAME)));
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-//        String time = String.valueOf(formatter.format(cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_TIME_TO))));
-//        currentDateTime.setText(time);
 
         try {
             dateAndTime.setTime(formatter.parse(formatter.format(cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_TIME_TO)))));
@@ -181,7 +179,6 @@ public class EditActivity extends Activity {
 
 
             new TaskDirectionRequest().execute(getRequestedUrl(from, to));
-//            values.put(DBHelper.KEY_ROUTE_TIME, 2700000);
 
 
             Switch s = findViewById(R.id.mondaySwitch);
@@ -209,7 +206,6 @@ public class EditActivity extends Activity {
         startActivity(intent);
     }
 
-    // отображаем диалоговое окно для выбора времени
     public void setTime(View v) {
         new TimePickerDialog(EditActivity.this, t,
                 dateAndTime.get(Calendar.HOUR_OF_DAY),
@@ -219,14 +215,12 @@ public class EditActivity extends Activity {
 
 
     private void setInitialDateTime() {
-
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         String time = String.valueOf(formatter.format(dateAndTime.getTimeInMillis()));
         currentDateTime.setText(time);
     }
 
 
-    // установка обработчика выбора времени
     TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -302,7 +296,6 @@ public class EditActivity extends Activity {
         @Override
         protected void onPostExecute(String responseString) {
             super.onPostExecute(responseString);
-            //Json object parsing
             TaskParseDirection parseResult = new TaskParseDirection();
             parseResult.execute(responseString);
         }

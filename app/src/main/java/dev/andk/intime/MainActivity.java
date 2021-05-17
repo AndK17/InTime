@@ -29,10 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     private final String LOG_TAG = "InTimeLog";
     
-    Button btn, workerBtn;
+    Button btn;
     DBHelper dbHelper;
     ListView lv;
-    boolean is_on = false;
 
     private AlarmManager alarmMgr;
     
@@ -44,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-//        PeriodicWorkRequest simpleRequest = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.SECONDS).build();
-
         btn = findViewById(R.id.button);
         btn.setOnClickListener(this::onClick);
         dbHelper = new DBHelper(this);
@@ -53,23 +50,6 @@ public class MainActivity extends AppCompatActivity {
         alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
         createAlarm();
-
-//        startService(new Intent(this, NotificationService.class));
-
-//        SimpleDateFormat formater1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        SimpleDateFormat formater = new SimpleDateFormat("HH:mm");
-//        String strD = "0:45";
-//
-//        try {
-//            Date date = formater.parse(strD);
-//            Log.d(LOG_TAG, String.valueOf(date.getTime()+10800000));
-//            Log.d(LOG_TAG, String.valueOf(formater1.format(date)));
-//        }
-//        catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-
         RouteAdapter adapter = new RouteAdapter(this, makeRoutes());
         lv = (ListView) findViewById(R.id.list);
         lv.setAdapter(adapter);
@@ -78,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView v = view.findViewById(R.id.textView);
-                Log.d(LOG_TAG, v.getText().toString());
                 Intent intent = new Intent(MainActivity.this, EditActivity.class);
                 intent.putExtra("name", v.getText().toString());
                 startActivity(intent);
@@ -89,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createAlarm(){
-        Log.d(LOG_TAG, "MainActivity CreateAlarm");
         Intent intent = new Intent(this, DailyReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
@@ -160,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 k++;
             } while (cursor.moveToNext());
         }
-        else
-            Log.d(LOG_TAG, "0 rows");
 
         Route[] arr = new Route[k];
         String[] daysArr = {"Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
@@ -183,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 route.days = route.days.substring(0, route.days.length()-2);
                 cursor.moveToNext();
             }
-        } else
-            Log.d(LOG_TAG, "0 rows");
+        }
 
         cursor.close();
 
