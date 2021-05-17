@@ -54,60 +54,16 @@ public class СheckingReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder;
         NotificationManagerCompat notificationManager;
 
-        Log.d("InTimeLog", "AlarmReceiver i = " + i);
-        switch (i){
-            case 0:
-                builder = new NotificationCompat.Builder(context, "inTime")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setContentTitle("Скоро выходить")
-                        .setContentText("Если вы выйдите сейчас по маршруту " + cursor.getString(
-                                cursor.getColumnIndex(DBHelper.KEY_NAME)) + ", то придете ровно к указаному времени")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                notificationManager = NotificationManagerCompat.from(context);
-                notificationManager.notify(1, builder.build());
-                break;
-            case 15:
-                builder = new NotificationCompat.Builder(context, "inTime")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setContentTitle("Скоро выходить")
-                        .setContentText("Если вы выйдите сейчас по маршруту " + cursor.getString(
-                                cursor.getColumnIndex(DBHelper.KEY_NAME)) + ", то придете за 15 минут до указаного времени")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                notificationManager = NotificationManagerCompat.from(context);
-                notificationManager.notify(1, builder.build());
-                break;
-            case 10:
-                builder = new NotificationCompat.Builder(context, "inTime")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setContentTitle("Скоро выходить")
-                        .setContentText("Если вы выйдите сейчас по маршруту " + cursor.getString(
-                                cursor.getColumnIndex(DBHelper.KEY_NAME)) + ", то придете за 10 минут до указаного времени")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                notificationManager = NotificationManagerCompat.from(context);
-                notificationManager.notify(1, builder.build());
-                break;
-            case 5:
-                builder = new NotificationCompat.Builder(context, "inTime")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setContentTitle("Скоро выходить")
-                        .setContentText("Если вы выйдите сейчас по маршруту " + cursor.getString(
-                                cursor.getColumnIndex(DBHelper.KEY_NAME)) + ", то придете за 5 минут до указаного времени")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                notificationManager = NotificationManagerCompat.from(context);
-                notificationManager.notify(1, builder.build());
-                break;
-            case 123:
-                get_cursor();
-                LatLng from = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LNG)));
-                LatLng to = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_FINISH_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_FINISH_LNG)));
-                new TaskDirectionRequest().execute(getRequestedUrl(from, to));
-                break;
-        }
+        Log.d("InTimeLog", "CheckingReceiver i = " + i);
+        get_cursor();
+        LatLng from = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LNG)));
+        LatLng to = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_FINISH_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_FINISH_LNG)));
+        new TaskDirectionRequest().execute(getRequestedUrl(from, to));
     }
 
 
     void createAlarm(int hour, int minute, int seconds, int id, int timeReserve, int startTime){
-        Log.d("InTimeLog", "AlarmReceiver createAlarm i = " + id);
+        Log.d("InTimeLog", "CheckingReceiver createAlarm id = " + id);
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, FifteenMinuteNotificationReceiver.class);
         Bundle bundle = new Bundle();
@@ -115,7 +71,7 @@ public class СheckingReceiver extends BroadcastReceiver {
         bundle.putSerializable("startTime", startTime);
         bundle.putSerializable("timeReserve", timeReserve);
         intent.putExtra("bundle", bundle);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, id, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -256,7 +212,6 @@ public class СheckingReceiver extends BroadcastReceiver {
 //                createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
 //                        Integer.valueOf(minuteFormatter.format(startTime)),
 //                        Integer.valueOf(secondsFormatter.format(startTime)), (int) getBundle.getSerializable("id"), 0);
-                Log.d("InTimeLog", "AlarmReceiver" + String.valueOf(startTime));
                 return null;
             } catch (JSONException e) {
                 e.printStackTrace();

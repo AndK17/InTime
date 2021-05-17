@@ -174,7 +174,6 @@ public class EditActivity extends Activity {
             String time = currentDateTime.getText().toString();
             try {
                 int t = (int) (formatter.parse(time).getTime());
-                Log.d("InTimeLog", String.valueOf(t));
                 values.put(DBHelper.KEY_TIME_TO, t);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -206,6 +205,7 @@ public class EditActivity extends Activity {
 
     public void backOnClick(View v) {
         Intent intent = new Intent(EditActivity.this, MainActivity.class);
+        intent.putExtra("createAlarm", "false");
         startActivity(intent);
     }
 

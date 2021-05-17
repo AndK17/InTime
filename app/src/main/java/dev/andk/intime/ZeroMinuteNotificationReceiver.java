@@ -1,7 +1,6 @@
 package dev.andk.intime;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +13,6 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 
 public class ZeroMinuteNotificationReceiver extends BroadcastReceiver {
@@ -33,9 +29,11 @@ public class ZeroMinuteNotificationReceiver extends BroadcastReceiver {
         context = c;
         dbHelper = new DBHelper(context);
         getBundle = intent.getBundleExtra("bundle");
-        int i = (int)getBundle.getSerializable("timeReserve");
+        int timeReserve = (int)getBundle.getSerializable("timeReserve");
 
         get_cursor();
+
+        Log.d("InTimeLog", "ZeroMinuteNotificationReceiver i = " + timeReserve + " id = " + getBundle.getSerializable("id"));
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "inTime")
                 .setSmallIcon(R.drawable.ic_launcher_background)
@@ -44,8 +42,7 @@ public class ZeroMinuteNotificationReceiver extends BroadcastReceiver {
                         cursor.getColumnIndex(DBHelper.KEY_NAME)) + ", то придете ровно к указаному времени")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(2, builder.build());
-        Log.d("InTimeLog", "NotificationReceiverr i = " + i + " id = " + getBundle.getSerializable("id"));
+        notificationManager.notify((int)getBundle.getSerializable("id"), builder.build());
     }
 
     void get_cursor(){

@@ -150,6 +150,7 @@ public class AddActivity extends Activity {
 
     public void backOnClick(View v) {
         Intent intent = new Intent(AddActivity.this, MainActivity.class);
+        intent.putExtra("createAlarm", "false");
         startActivity(intent);
     }
 

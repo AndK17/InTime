@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     boolean is_on = false;
 
     private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
     
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -50,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         btn = findViewById(R.id.button);
         btn.setOnClickListener(this::onClick);
         dbHelper = new DBHelper(this);
+
+        alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
         createAlarm();
 
@@ -88,19 +89,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createAlarm(){
-        Log.d("InTimeLog", "Create ALARM");
-        alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        Log.d(LOG_TAG, "MainActivity CreateAlarm");
         Intent intent = new Intent(this, DailyReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTime(calendar.getTime());
-        Log.d("InTimeLog", String.valueOf(calendar.getTime()));
 
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
 
-        Log.d("InTimeLog", "Create ALARM1");
         calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -109,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, alarmIntent);
-        Log.d("InTimeLog", "Create ALARM2");
     }
 
     private void createNotificationChannel() {

@@ -42,7 +42,7 @@ public class FifteenMinuteNotificationReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder;
         NotificationManagerCompat notificationManager;
 
-        Log.d("InTimeLog", "NotificationReceiver i = " + i + " id = " + getBundle.getSerializable("startTime"));
+        Log.d("InTimeLog", "FifteenMinuteNotificationReceiver i = " + i + " id = " + getBundle.getSerializable("id"));
         builder = new NotificationCompat.Builder(context, "inTime")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Скоро выходить")
@@ -50,7 +50,7 @@ public class FifteenMinuteNotificationReceiver extends BroadcastReceiver {
                         cursor.getColumnIndex(DBHelper.KEY_NAME)) + ", то придете за 15 минут до указаного времени")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify((int)getBundle.getSerializable("id"), builder.build());
 
 
         SimpleDateFormat hourFormatter = new SimpleDateFormat("HH");
@@ -65,14 +65,14 @@ public class FifteenMinuteNotificationReceiver extends BroadcastReceiver {
     }
 
     void createAlarm(int hour, int minute, int seconds, int id, int timeReserve){
-        Log.d("InTimeLog", "NotificationReceiver createAlarm i = " + timeReserve);
+        Log.d("InTimeLog", "FifteenMinuteNotificationReceiver createAlarm i = " + timeReserve);
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ZeroMinuteNotificationReceiver.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("id", id);
         bundle.putSerializable("timeReserve", timeReserve);
         intent.putExtra("bundle", bundle);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, id, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());

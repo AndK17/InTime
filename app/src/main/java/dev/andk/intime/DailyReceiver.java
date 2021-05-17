@@ -22,12 +22,14 @@ public class DailyReceiver extends BroadcastReceiver {
 
     Context context;
     DBHelper dbHelper;
+    AlarmManager alarmMgr;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context c, Intent intent) {
         context = c;
         dbHelper = new DBHelper(context);
+        alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         Log.d("InTimeLog", "Daily ALARM");
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "inTime")
@@ -40,15 +42,16 @@ public class DailyReceiver extends BroadcastReceiver {
         get_data();
     }
 
-    void createAlarm(int hour, int minute, int seconds, int id){
+    void createAlarm(int hour, int minute, int seconds, int id, int requestCode){
         Log.d("InTimeLog", "DailyReceiver createAlarm");
-        AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, СheckingReceiver.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("id", id);
         bundle.putSerializable("timeReserve", 123);
         intent.putExtra("bundle", bundle);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
+        if (alarmIntent == null) Log.d("InTimeLog", "pIntent2 is null");
+        else Log.d("InTimeLog", "pIntent2 created");
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -61,6 +64,7 @@ public class DailyReceiver extends BroadcastReceiver {
     }
 
     void get_data() {
+        int i = 0;
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         String[] strDays = new String[]{
                 DBHelper.KEY_IS_SUNDAY,
@@ -95,16 +99,17 @@ public class DailyReceiver extends BroadcastReceiver {
                         ", start time " + formatter.format(startTime+1800000));
                 try {
                     long f = formatter.parse(formatter.format(calendar.getTime().getTime())).getTime();
-                    Log.d("InTimeLog", String.valueOf(formatter.format(f)) + " " + formatter.format(startTime+1800000));
+                    Log.d("InTimeLog", formatter.format(f) + " " + formatter.format(startTime+1800000));
                     if (f > startTime+1800000)
                         Log.d("InTimeLog", "DailyReceiver Вы опаздали ");
                     else
                         createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
                                 Integer.valueOf(minuteFormatter.format(startTime)),
-                                Integer.valueOf(secondsFormatter.format(startTime)), cursor.getInt(idIndex));
+                                Integer.valueOf(secondsFormatter.format(startTime)), cursor.getInt(idIndex), i);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                i++;
             } while (cursor.moveToNext());
         } else
             Log.d("InTimeLog", "DailyReceiver 0 rows");
