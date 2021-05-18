@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -31,27 +30,16 @@ public class DailyReceiver extends BroadcastReceiver {
         dbHelper = new DBHelper(context);
         alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        Log.d("InTimeLog", "Daily ALARM");
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "inTime")
-//                .setSmallIcon(R.drawable.ic_launcher_background)
-//                .setContentTitle("Заголовок")
-//                .setContentText("Текст уведомления")
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-//        notificationManager.notify(1, builder.build());
         get_data();
     }
 
     void createAlarm(int hour, int minute, int seconds, int id, int requestCode){
-        Log.d("InTimeLog", "DailyReceiver createAlarm");
         Intent intent = new Intent(context, СheckingReceiver.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("id", id);
         bundle.putSerializable("timeReserve", 123);
         intent.putExtra("bundle", bundle);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
-        if (alarmIntent == null) Log.d("InTimeLog", "pIntent2 is null");
-        else Log.d("InTimeLog", "pIntent2 created");
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -91,17 +79,10 @@ public class DailyReceiver extends BroadcastReceiver {
             int routeTimeIndex = cursor.getColumnIndex(DBHelper.KEY_ROUTE_TIME);
             do {
                 int startTime = cursor.getInt(timeToIndex)-cursor.getInt(routeTimeIndex)-1800000;
-                Log.d("InTimeLog", "DailyReceiver ID = " + cursor.getInt(idIndex) +
-                        ", name " + cursor.getString(nameIndex) +
-                        ", time to " + formatter.format(cursor.getInt(timeToIndex)) +
-                        ", route time " + formatter.format(cursor.getInt(routeTimeIndex))+
-                        ", start time " + formatter.format(startTime)+
-                        ", start time " + formatter.format(startTime+1800000));
                 try {
                     long f = formatter.parse(formatter.format(calendar.getTime().getTime())).getTime();
-                    Log.d("InTimeLog", formatter.format(f) + " " + formatter.format(startTime+1800000));
                     if (f > startTime+1800000)
-                        Log.d("InTimeLog", "DailyReceiver Вы опаздали ");
+                        return;
                     else
                         createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
                                 Integer.valueOf(minuteFormatter.format(startTime)),
@@ -111,8 +92,7 @@ public class DailyReceiver extends BroadcastReceiver {
                 }
                 i++;
             } while (cursor.moveToNext());
-        } else
-            Log.d("InTimeLog", "DailyReceiver 0 rows");
+        }
 
         cursor.close();
     }

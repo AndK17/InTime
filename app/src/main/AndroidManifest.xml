@@ -28,8 +28,7 @@
 
         <receiver android:name=".DailyReceiver" />
         <receiver android:name=".СheckingReceiver"/>
-        <receiver android:name=".FifteenMinuteNotificationReceiver"/>
-        <receiver android:name=".ZeroMinuteNotificationReceiver"/>
+        <receiver android:name=".NotificationReceiver"/>
     </application>
 
 </manifest>

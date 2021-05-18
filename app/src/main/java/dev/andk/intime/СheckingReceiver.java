@@ -10,11 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -49,9 +46,7 @@ public class СheckingReceiver extends BroadcastReceiver {
         context = c;
         dbHelper = new DBHelper(context);
         getBundle = intent.getBundleExtra("bundle");
-        int i = (int)getBundle.getSerializable("timeReserve");
 
-        Log.d("InTimeLog", "CheckingReceiver i = " + i);
         get_cursor();
         LatLng from = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_START_LNG)));
         LatLng to = new LatLng(cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_FINISH_LAT)), cursor.getFloat(cursor.getColumnIndex(DBHelper.KEY_FINISH_LNG)));
@@ -60,15 +55,17 @@ public class СheckingReceiver extends BroadcastReceiver {
 
 
     void createAlarm(int hour, int minute, int seconds, int id, int timeReserve, int startTime){
-        Log.d("InTimeLog", "CheckingReceiver createAlarm id = " + id);
+        int requestCode = id+timeReserve;
+
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, FifteenMinuteNotificationReceiver.class);
+
+        Intent intent = new Intent(context, NotificationReceiver.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("id", id);
         bundle.putSerializable("startTime", startTime);
         bundle.putSerializable("timeReserve", timeReserve);
         intent.putExtra("bundle", bundle);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, id, intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -187,6 +184,15 @@ public class СheckingReceiver extends BroadcastReceiver {
                         Integer.valueOf(secondsFormatter.format(startTime)),
                         (int) getBundle.getSerializable("id"),
                         15,
+                        startTime+900000);
+
+                startTime += 900000;
+
+                createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
+                        Integer.valueOf(minuteFormatter.format(startTime)),
+                        Integer.valueOf(secondsFormatter.format(startTime)),
+                        (int) getBundle.getSerializable("id"),
+                        0,
                         startTime+900000);
 
 //                startTime += 300000;

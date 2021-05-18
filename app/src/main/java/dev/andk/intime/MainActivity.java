@@ -16,7 +16,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,8 +26,6 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String LOG_TAG = "InTimeLog";
-    
     Button btn;
     DBHelper dbHelper;
     ListView lv;
