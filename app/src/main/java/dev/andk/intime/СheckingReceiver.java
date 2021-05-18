@@ -194,24 +194,6 @@ public class СheckingReceiver extends BroadcastReceiver {
                         (int) getBundle.getSerializable("id"),
                         0,
                         startTime+900000);
-
-//                startTime += 300000;
-//
-//                createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
-//                        Integer.valueOf(minuteFormatter.format(startTime)),
-//                        Integer.valueOf(secondsFormatter.format(startTime)), (int) getBundle.getSerializable("id"), 10);
-//
-//                startTime += 300000;
-//
-//                createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
-//                        Integer.valueOf(minuteFormatter.format(startTime)),
-//                        Integer.valueOf(secondsFormatter.format(startTime)), (int) getBundle.getSerializable("id"), 5);
-//
-//                startTime += 300000;
-//
-//                createAlarm(Integer.valueOf(hourFormatter.format(startTime)),
-//                        Integer.valueOf(minuteFormatter.format(startTime)),
-//                        Integer.valueOf(secondsFormatter.format(startTime)), (int) getBundle.getSerializable("id"), 0);
                 return null;
             } catch (JSONException e) {
                 e.printStackTrace();

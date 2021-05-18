@@ -74,7 +74,6 @@ public class DailyReceiver extends BroadcastReceiver {
 
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
-            int nameIndex = cursor.getColumnIndex(DBHelper.KEY_NAME);
             int timeToIndex = cursor.getColumnIndex(DBHelper.KEY_TIME_TO);
             int routeTimeIndex = cursor.getColumnIndex(DBHelper.KEY_ROUTE_TIME);
             do {
