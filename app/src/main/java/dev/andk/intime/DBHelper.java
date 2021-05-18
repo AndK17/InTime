@@ -32,6 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION); }
+
         @Override
         public void onCreate(SQLiteDatabase db) {
             String query = "CREATE TABLE " + TABLE_NAME + " (" + KEY_ID +

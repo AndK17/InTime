@@ -56,7 +56,7 @@ public class AddActivity extends Activity {
 
         backBtn = findViewById(R.id.backButton);
         backBtn.setOnClickListener(this::backOnClick);
-        addBtn = findViewById(R.id.addButton);
+        addBtn = findViewById(R.id.saveButton);
         addBtn.setOnClickListener(this::addOnclick);
         timeBtn = findViewById(R.id.timeButton);
         timeBtn.setOnClickListener(this::setTime);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,17 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginBottom="24dp"
-        android:text="Отмена"
+        android:text="@string/backButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="24dp"
-        android:text="Сохранить"
+        android:text="@string/saveButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -32,7 +31,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Название"
+        android:hint="@string/nameText"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +43,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="Откуда"
+        android:hint="@string/fromText"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
@@ -56,7 +55,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="Куда"
+        android:hint="@string/toText"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fromText" />
@@ -67,7 +66,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:text="Изменить"
+        android:text="@string/timeButton"
         app:layout_constraintStart_toEndOf="@+id/timeText"
         app:layout_constraintTop_toBottomOf="@+id/toText" />
 
@@ -78,9 +77,20 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:paddingTop="4dp"
-        android:text="Добраться к "
+        android:text="@string/timeText"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toText" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:paddingTop="4dp"
+        android:text=" "
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/timeTextt"
         app:layout_constraintTop_toBottomOf="@+id/toText" />
 
     <Switch
@@ -89,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="Понедельник"
+        android:text="@string/mondaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeTextt" />
@@ -100,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Воскресенье"
+        android:text="@string/sundaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/saturdaySwitch" />
@@ -111,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Суббота"
+        android:text="@string/saturdaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fridaySwitch" />
@@ -122,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Пятница"
+        android:text="@string/fridaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thursdaySwitch" />
@@ -133,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Четверг"
+        android:text="@string/thursdaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wednesdaySwitch" />
@@ -144,7 +154,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Среда"
+        android:text="@string/wednesdaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tuesdaySwitch" />
@@ -155,21 +165,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Вторник"
+        android:text="@string/tuesdaySwitch"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mondaySwitch" />
-
-    <TextView
-        android:id="@+id/timeText"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:paddingTop="4dp"
-        android:text="12:30"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/timeTextt"
-        app:layout_constraintTop_toBottomOf="@+id/toText" />
 
     <Button
         android:id="@+id/delButton"
@@ -177,7 +176,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Удалить"
+        android:text="@string/delButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

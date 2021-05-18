@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">InTime</string>
+    <string name="nameText">Название</string>
+    <string name="fromText">Откуда</string>
+    <string name="toText">Куда</string>
+    <string name="timeText">Добраться к</string>
+    <string name="timeButton">Изменить</string>
+    <string name="mondaySwitch">Понедельник</string>
+    <string name="tuesdaySwitch">Вторник</string>
+    <string name="wednesdaySwitch">Среда</string>
+    <string name="thursdaySwitch">Четверг</string>
+    <string name="fridaySwitch">Пятница</string>
+    <string name="saturdaySwitch">Суббота</string>
+    <string name="sundaySwitch">Воскресенье</string>
+    <string name="backButton">Отмена</string>
+    <string name="saveButton">Сохранить</string>
+    <string name="delButton">Удалить</string>
 </resources>

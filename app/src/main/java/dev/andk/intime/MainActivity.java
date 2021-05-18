@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn;
+    Button btn, testBtn;
     DBHelper dbHelper;
     ListView lv;
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        btn = findViewById(R.id.button);
+        btn = findViewById(R.id.addButton);
         btn.setOnClickListener(this::onClick);
         dbHelper = new DBHelper(this);
 
@@ -112,12 +112,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
 
     public void onClick(View v) {
         Intent intent = new Intent(MainActivity.this, AddActivity.class);

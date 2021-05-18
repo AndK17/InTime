@@ -10,7 +10,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +57,7 @@ public class EditActivity extends Activity {
 
         backBtn = findViewById(R.id.backButton);
         backBtn.setOnClickListener(this::backOnClick);
-        addBtn = findViewById(R.id.addButton);
+        addBtn = findViewById(R.id.saveButton);
         addBtn.setOnClickListener(this::addOnclick);
         timeBtn = findViewById(R.id.timeButton);
         timeBtn.setOnClickListener(this::setTime);
